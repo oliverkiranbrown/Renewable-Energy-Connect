@@ -5,7 +5,7 @@
             <script src="lib/bindings/utils.js"></script>
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
             <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-            
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         
 <center>
 <h1><i><b>Renewable Energy Connect</b></i></h1>
@@ -72,20 +72,52 @@
 
 
     <body>
-
         <div class="container">
             <div class="card">
                 <div id="mynetwork" class="card-body"></div>
             </div>
             <div class="sidebar">
-                <h2><i>Organisation</ii></h2>
+                <h2 id="test" onclick="make_red()"><i>Organisation: </ii></h2>
                     <ul>
                         <li>Website</li>
                         <li>Image</li>
                         <li>Reviews</li>
                     </ul>
+
+                    <p>The organisation '<span id="selected_node_text_box"></span>' is selected</p>
+
+                    <input type="text" id="input">
+                    <button onclick="sendData">Send Data</button>
+                    <div id="output"></div>
+                    <script>
+                        function sendData() {
+                            var value = document.getElementById('input').value;
+                            $.ajax({
+                                url: '/process',
+                                type: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify({ 'value': value }),
+                                success: function(response) {
+                                    document.getElementById('output').innerHTML = response.result;
+                                },
+                                error: function(error) {
+                                    console.log(error);
+                                }
+                            });
+                        }
+                    </script>
             </div>
         </div>
+
+        <script>
+            // make something red on click
+            function make_red() {
+                document.getElementById("test").style.color = "red"
+            }
+            
+        </script>
+
+
 
         
 
@@ -110,9 +142,6 @@
                   value : []
               };
 
-              
-
-              
 
               // This method is responsible for drawing the graph, returns the drawn network
               function drawGraph() {
@@ -128,6 +157,7 @@
                   allNodes = nodes.get({ returnType: "Object" });
                   for (nodeId in allNodes) {
                     nodeColors[nodeId] = allNodes[nodeId].color;
+
                   }
                   allEdges = edges.get({ returnType: "Object" });
                   // adding nodes and edges to the graph
@@ -169,6 +199,13 @@
                   
 
                   network = new vis.Network(container, data, options);
+                  network.on('click', function(properties) {
+                    if (properties.nodes.length > 0) {
+                        var selected_node = properties.nodes
+                        document.getElementById("selected_node_text_box").innerHTML = selected_node
+                    }
+
+                  })
 
                   
 
