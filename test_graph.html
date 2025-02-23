@@ -1,0 +1,671 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+                <link href="lib/tom-select/tom-select.css" rel="stylesheet">
+                <script src="lib/tom-select/tom-select.complete.min.js"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 800px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+             #loadingBar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width: 100%;
+                 height: 800px;
+                 background-color:rgba(200,200,200,0.8);
+                 -webkit-transition: all 0.5s ease;
+                 -moz-transition: all 0.5s ease;
+                 -ms-transition: all 0.5s ease;
+                 -o-transition: all 0.5s ease;
+                 transition: all 0.5s ease;
+                 opacity:1;
+             }
+
+             #bar {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 width:20px;
+                 height:20px;
+                 margin:auto auto auto auto;
+                 border-radius:11px;
+                 border:2px solid rgba(30,30,30,0.05);
+                 background: rgb(0, 173, 246); /* Old browsers */
+                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
+             }
+
+             #border {
+                 position:absolute;
+                 top:10px;
+                 left:10px;
+                 width:500px;
+                 height:23px;
+                 margin:auto auto auto auto;
+                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
+                 border-radius:10px;
+             }
+
+             #text {
+                 position:absolute;
+                 top:8px;
+                 left:530px;
+                 width:30px;
+                 height:50px;
+                 margin:auto auto auto auto;
+                 font-size:22px;
+                 color: #000000;
+             }
+
+             div.outerBorder {
+                 position:relative;
+                 top:400px;
+                 width:600px;
+                 height:44px;
+                 margin:auto auto auto auto;
+                 border:8px solid rgba(0,0,0,0.1);
+                 background: rgb(252,252,252); /* Old browsers */
+                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
+                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
+                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
+                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
+                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
+                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
+                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+                 border-radius:72px;
+                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+             }
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="Project definition">Project definition</option>
+                                
+                                    <option value="Feasibility study">Feasibility study</option>
+                                
+                                    <option value="Heads of Terms">Heads of Terms</option>
+                                
+                                    <option value="Legal & Finance">Legal & Finance</option>
+                                
+                                    <option value="Build">Build</option>
+                                
+                                    <option value="Commision, Monitor and Maintain">Commision, Monitor and Maintain</option>
+                                
+                                    <option value="Bryant-Ball">Bryant-Ball</option>
+                                
+                                    <option value="Warren Group">Warren Group</option>
+                                
+                                    <option value="Barrett-Porter">Barrett-Porter</option>
+                                
+                                    <option value="Stewart-Young">Stewart-Young</option>
+                                
+                                    <option value="Koch Inc">Koch Inc</option>
+                                
+                                    <option value="Mitchell-Munoz">Mitchell-Munoz</option>
+                                
+                                    <option value="Ramirez, Murphy and Hayden">Ramirez, Murphy and Hayden</option>
+                                
+                                    <option value="Smith-Hughes">Smith-Hughes</option>
+                                
+                                    <option value="Webb-West">Webb-West</option>
+                                
+                                    <option value="Jones Ltd">Jones Ltd</option>
+                                
+                                    <option value="Finley and Sons">Finley and Sons</option>
+                                
+                                    <option value="Reeves-Williams">Reeves-Williams</option>
+                                
+                                    <option value="Leonard-Flores">Leonard-Flores</option>
+                                
+                                    <option value="Ochoa Group">Ochoa Group</option>
+                                
+                                    <option value="Martin-Townsend">Martin-Townsend</option>
+                                
+                                    <option value="Mcintosh Group">Mcintosh Group</option>
+                                
+                                    <option value="Aguirre, Powell and Escobar">Aguirre, Powell and Escobar</option>
+                                
+                                    <option value="Giles and Sons">Giles and Sons</option>
+                                
+                                    <option value="Leonard Ltd">Leonard Ltd</option>
+                                
+                                    <option value="Berry and Sons">Berry and Sons</option>
+                                
+                                    <option value="Brown, Mcguire and Barton">Brown, Mcguire and Barton</option>
+                                
+                                    <option value="Parker LLC">Parker LLC</option>
+                                
+                                    <option value="Barker LLC">Barker LLC</option>
+                                
+                                    <option value="Gray, Watson and Smith">Gray, Watson and Smith</option>
+                                
+                                    <option value="Brown Inc">Brown Inc</option>
+                                
+                                    <option value="Collins-Thompson">Collins-Thompson</option>
+                                
+                                    <option value="Lambert Group">Lambert Group</option>
+                                
+                                    <option value="Rodriguez LLC">Rodriguez LLC</option>
+                                
+                                    <option value="Combs-Brown">Combs-Brown</option>
+                                
+                                    <option value="Hoffman Group">Hoffman Group</option>
+                                
+                                    <option value="Nicholson-Summers">Nicholson-Summers</option>
+                                
+                                    <option value="Johnston and Sons">Johnston and Sons</option>
+                                
+                                    <option value="Griffith, Solis and Payne">Griffith, Solis and Payne</option>
+                                
+                                    <option value="Fisher, Mendoza and Clark">Fisher, Mendoza and Clark</option>
+                                
+                                    <option value="Bates LLC">Bates LLC</option>
+                                
+                                    <option value="Jenkins, Pratt and Diaz">Jenkins, Pratt and Diaz</option>
+                                
+                                    <option value="White-Thornton">White-Thornton</option>
+                                
+                                    <option value="Garrison LLC">Garrison LLC</option>
+                                
+                                    <option value="Adams-Leon">Adams-Leon</option>
+                                
+                                    <option value="Flowers-Miller">Flowers-Miller</option>
+                                
+                                    <option value="Hudson-Taylor">Hudson-Taylor</option>
+                                
+                                    <option value="Hancock, Parrish and Lopez">Hancock, Parrish and Lopez</option>
+                                
+                                    <option value="Blair, Cooper and Nelson">Blair, Cooper and Nelson</option>
+                                
+                                    <option value="Reed-Clements">Reed-Clements</option>
+                                
+                                    <option value="Flores LLC">Flores LLC</option>
+                                
+                                    <option value="Pearson Inc">Pearson Inc</option>
+                                
+                                    <option value="Henderson, Terry and Mcmillan">Henderson, Terry and Mcmillan</option>
+                                
+                                    <option value="Mendez-Bright">Mendez-Bright</option>
+                                
+                                    <option value="Hall-Perkins">Hall-Perkins</option>
+                                
+                                    <option value="Carter, Cannon and Little">Carter, Cannon and Little</option>
+                                
+                                    <option value="Brown Ltd">Brown Ltd</option>
+                                
+                                    <option value="Harrell, Mcguire and Williams">Harrell, Mcguire and Williams</option>
+                                
+                                    <option value="Stafford-Landry">Stafford-Landry</option>
+                                
+                                    <option value="Adams Ltd">Adams Ltd</option>
+                                
+                                    <option value="Cooper-Armstrong">Cooper-Armstrong</option>
+                                
+                                    <option value="Kelly Ltd">Kelly Ltd</option>
+                                
+                                    <option value="Yu PLC">Yu PLC</option>
+                                
+                                    <option value="Davis Group">Davis Group</option>
+                                
+                                    <option value="Ibarra LLC">Ibarra LLC</option>
+                                
+                                    <option value="Mclaughlin-Smith">Mclaughlin-Smith</option>
+                                
+                                    <option value="Sawyer, Rodriguez and Mclean">Sawyer, Rodriguez and Mclean</option>
+                                
+                                    <option value="Turner Group">Turner Group</option>
+                                
+                                    <option value="Parsons-Gonzalez">Parsons-Gonzalez</option>
+                                
+                                    <option value="Valdez-Steele">Valdez-Steele</option>
+                                
+                                    <option value="Bradley, Cain and Turner">Bradley, Cain and Turner</option>
+                                
+                                    <option value="Sullivan LLC">Sullivan LLC</option>
+                                
+                                    <option value="Wang, Wagner and Everett">Wang, Wagner and Everett</option>
+                                
+                                    <option value="Eaton-Jones">Eaton-Jones</option>
+                                
+                                    <option value="Frazier-Thornton">Frazier-Thornton</option>
+                                
+                                    <option value="Peters, Mack and Johnson">Peters, Mack and Johnson</option>
+                                
+                                    <option value="Ray-Camacho">Ray-Camacho</option>
+                                
+                                    <option value="Weaver, Boyd and Williams">Weaver, Boyd and Williams</option>
+                                
+                                    <option value="Beck-Rodriguez">Beck-Rodriguez</option>
+                                
+                                    <option value="Alvarado, Winters and Thornton">Alvarado, Winters and Thornton</option>
+                                
+                                    <option value="Carroll Ltd">Carroll Ltd</option>
+                                
+                                    <option value="Moreno PLC">Moreno PLC</option>
+                                
+                                    <option value="Gomez Group">Gomez Group</option>
+                                
+                                    <option value="Wilkins, Yates and Stewart">Wilkins, Yates and Stewart</option>
+                                
+                                    <option value="Brooks PLC">Brooks PLC</option>
+                                
+                                    <option value="Neal, White and Garcia">Neal, White and Garcia</option>
+                                
+                                    <option value="Reese, Marquez and Garner">Reese, Marquez and Garner</option>
+                                
+                                    <option value="Roberts-Gonzales">Roberts-Gonzales</option>
+                                
+                                    <option value="Taylor, Jordan and Young">Taylor, Jordan and Young</option>
+                                
+                                    <option value="Shaffer-Potter">Shaffer-Potter</option>
+                                
+                                    <option value="Wilkinson PLC">Wilkinson PLC</option>
+                                
+                                    <option value="Jenkins, Morrow and Garcia">Jenkins, Morrow and Garcia</option>
+                                
+                                    <option value="Barrett, Brown and Zamora">Barrett, Brown and Zamora</option>
+                                
+                                    <option value="Scott-Aguilar">Scott-Aguilar</option>
+                                
+                                    <option value="Thomas PLC">Thomas PLC</option>
+                                
+                                    <option value="Johnson LLC">Johnson LLC</option>
+                                
+                                    <option value="Green LLC">Green LLC</option>
+                                
+                                    <option value="Huber-Aguirre">Huber-Aguirre</option>
+                                
+                                    <option value="Smith Inc">Smith Inc</option>
+                                
+                                    <option value="Lopez Inc">Lopez Inc</option>
+                                
+                                    <option value="Freeman-Gonzalez">Freeman-Gonzalez</option>
+                                
+                                    <option value="Stewart-Gray">Stewart-Gray</option>
+                                
+                                    <option value="Cruz Group">Cruz Group</option>
+                                
+                                    <option value="Leon, Robbins and Nelson">Leon, Robbins and Nelson</option>
+                                
+                                    <option value="Wilson, Harrison and Guzman">Wilson, Harrison and Guzman</option>
+                                
+                                    <option value="Phillips, Hunt and Murray">Phillips, Hunt and Murray</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+              <div id="filter-menu" class="card-header">
+                <div class="row no-gutters">
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="updateFilter(value, 'item')"
+                            id="select-item"
+                        >
+                        <option value="">Select a network item</option>
+                        <option value="edge">edge</option>
+                        <option value="node">node</option>
+                    </select>
+                  </div>
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="updateFilter(value, 'property')"
+                            id="select-property"
+                        >
+                        <option value="">Select a property...</option>
+                    </select>
+                  </div>
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            id="select-value"
+                        >
+                        <option value="">Select value(s)...</option>
+                    </select>
+                  </div>
+                  <div class="col-1 pb-2">
+                    <button type="button" class="btn btn-primary btn-block" onclick="highlightFilter(filter);">Filter</button>
+                  </div>
+                  <div class="col-2 pb-2">
+                    <button type="button" class="btn btn-primary btn-block" onclick="clearFilter(true)">Reset Selection</button>
+                  </div>
+                </div>
+              </div>
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+            <div id="loadingBar">
+              <div class="outerBorder">
+                <div id="text">0%</div>
+                <div id="border">
+                  <div id="bar"></div>
+                </div>
+              </div>
+            </div>
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+                  // explicitly using onItemAdd and this function as we need to save multiple values
+                  let updateValueFilter = function() {
+                      return function () {
+                      filter['value'].push(arguments[0])
+                      }
+                  }
+
+                  let valueControl = new TomSelect("#select-value",{
+                      maxItems: null,
+                      valueField: 'id',
+                      labelField: 'title',
+                      searchField: 'title',
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: updateValueFilter()
+                  });
+
+                  let addValues = function() {
+                      return function () {
+                          // clear the current value options and add the selected attribute values
+                          // tom-select handles duplicates
+                          let selectedProperty = arguments[0];
+                          valueControl.clear();
+                          valueControl.clearOptions();
+                          filter['value'] = []
+                          if (filter['item'] === 'node') {
+                              for (let each in allNodes) {
+                                  valueControl.addOption({
+                                      id:allNodes[each][selectedProperty],
+                                      title:allNodes[each][selectedProperty]
+                                  })
+                              }
+                          }
+                          else if (filter['item'] === 'edge') {
+                              for (let each in allEdges) {
+                                  valueControl.addOption({
+                                      id:allEdges[each][selectedProperty],
+                                      title:allEdges[each][selectedProperty]
+                                  })
+                              }
+                          }
+                      }
+                  };
+
+                  let propControl = new TomSelect("#select-property",{
+                      valueField: 'id',
+                      labelField: 'title',
+                      searchField: 'title',
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: addValues()
+                  });
+
+                  let addProperties = function() {
+                      return function () {
+                          // loops through the selected network item and adds the attributes to dropdown
+                          // tom-select handles duplicates
+                          clearFilter(false)
+                          if (arguments[0] === 'edge') {
+                              for (let each in allEdges) {
+                                  if (allEdges.hasOwnProperty(each)) {
+                                      for (let eachProp in allEdges[each]) {
+                                          if (allEdges[each].hasOwnProperty(eachProp)) {
+                                              propControl.addOption({id: eachProp, title: eachProp})
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                          else if (arguments[0] === 'node') {
+                              for (let each in allNodes) {
+                                  if (allNodes.hasOwnProperty(each)) {
+                                      for (let eachProp in allNodes[each]) {
+                                          if (allNodes[each].hasOwnProperty(eachProp)
+                                              && (eachProp !== 'hidden' && eachProp !== 'savedLabel'
+                                                  && eachProp !== 'hiddenLabel')) {
+                                              propControl.addOption({id: eachProp, title: eachProp})
+
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  };
+
+                  let itemControl = new TomSelect("#select-item",{
+                      create: false,
+                      sortField:{
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: addProperties()
+                  });
+
+                  function clearFilter(reset) {
+                      // utility function to clear all the selected filter options
+                      // if reset is set to true, the existing filter will be removed
+                      // else, only the dropdown options are cleared
+                      propControl.clear();
+                      propControl.clearOptions();
+                      valueControl.clear();
+                      valueControl.clearOptions();
+                      filter = {
+                          item : '',
+                          property : '',
+                          value : []
+                      }
+                      if (reset) {
+                          itemControl.clear();
+                          filterHighlight({nodes: []})
+                      }
+                  }
+
+                  function updateFilter(value, key) {
+                      // key could be 'item' or 'property' and value is as selected in dropdown
+                      filter[key] = value
+                  }
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "DarkSalmon", "id": "Project definition", "label": "Project definition", "shape": "dot", "size": 70, "x": 10, "y": 10}, {"color": "DarkSalmon", "id": "Feasibility study", "label": "Feasibility study", "shape": "dot", "size": 70, "x": 400, "y": 400}, {"color": "DarkSalmon", "id": "Heads of Terms", "label": "Heads of Terms", "shape": "dot", "size": 70, "x": 600, "y": 600}, {"color": "DarkSalmon", "id": "Legal \u0026 Finance", "label": "Legal \u0026 Finance", "shape": "dot", "size": 70, "x": 350, "y": 350}, {"color": "DarkSalmon", "id": "Build", "label": "Build", "shape": "dot", "size": 70, "x": 200, "y": 200}, {"color": "DarkSalmon", "id": "Commision, Monitor and Maintain", "label": "Commision, Monitor and Maintain", "shape": "dot", "size": 70, "x": 100, "y": 100}, {"Primary Professional Category": "Finance", "color": "LightSkyBlue", "id": "Bryant-Ball", "label": "Bryant-Ball", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Electrical Engineering", "color": "GoldenRod", "id": "Warren Group", "label": "Warren Group", "primary_project_stage": "Legal \u0026 Finance", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Groundworks", "color": "IndianRed", "id": "Barrett-Porter", "label": "Barrett-Porter", "primary_project_stage": "Feasibility study", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Civil Engineering", "color": "CadetBlue", "id": "Stewart-Young", "label": "Stewart-Young", "primary_project_stage": "Feasibility study", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Legal", "color": "Bisque", "id": "Koch Inc", "label": "Koch Inc", "primary_project_stage": "Feasibility study", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "System Design", "color": "BlueViolet", "id": "Mitchell-Munoz", "label": "Mitchell-Munoz", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "Commision, Monitor and Maintain", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Ramirez, Murphy and Hayden", "label": "Ramirez, Murphy and Hayden", "primary_project_stage": "Project definition", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Smith-Hughes", "label": "Smith-Hughes", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Electrical Engineering", "color": "GoldenRod", "id": "Webb-West", "label": "Webb-West", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "System Design", "color": "BlueViolet", "id": "Jones Ltd", "label": "Jones Ltd", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Finley and Sons", "label": "Finley and Sons", "primary_project_stage": "Legal \u0026 Finance", "secondary_professional_category": "Electrical Engineering", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Civil Engineering", "color": "CadetBlue", "id": "Reeves-Williams", "label": "Reeves-Williams", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Civil Engineering", "color": "CadetBlue", "id": "Leonard-Flores", "label": "Leonard-Flores", "primary_project_stage": "Feasibility study", "secondary_professional_category": "NA", "secondary_project_stage": "Build", "shape": "dot", "size": 5}, {"Primary Professional Category": "Electrical Engineering", "color": "GoldenRod", "id": "Ochoa Group", "label": "Ochoa Group", "primary_project_stage": "Commision, Monitor and Maintain", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Legal", "color": "Bisque", "id": "Martin-Townsend", "label": "Martin-Townsend", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "System Design", "color": "BlueViolet", "id": "Mcintosh Group", "label": "Mcintosh Group", "primary_project_stage": "Feasibility study", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Aguirre, Powell and Escobar", "label": "Aguirre, Powell and Escobar", "primary_project_stage": "Project definition", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Finance", "color": "LightSkyBlue", "id": "Giles and Sons", "label": "Giles and Sons", "primary_project_stage": "Build", "secondary_professional_category": "Electrical Engineering", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Fundraising", "color": "LightCoral", "id": "Leonard Ltd", "label": "Leonard Ltd", "primary_project_stage": "Build", "secondary_professional_category": "Legal", "secondary_project_stage": "Heads of Terms", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Berry and Sons", "label": "Berry and Sons", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Groundworks", "color": "IndianRed", "id": "Brown, Mcguire and Barton", "label": "Brown, Mcguire and Barton", "primary_project_stage": "Project definition", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "System Design", "color": "BlueViolet", "id": "Parker LLC", "label": "Parker LLC", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "System Design", "color": "BlueViolet", "id": "Barker LLC", "label": "Barker LLC", "primary_project_stage": "Legal \u0026 Finance", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Gray, Watson and Smith", "label": "Gray, Watson and Smith", "primary_project_stage": "Project definition", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Fundraising", "color": "LightCoral", "id": "Brown Inc", "label": "Brown Inc", "primary_project_stage": "Project definition", "secondary_professional_category": "Civil Engineering", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Finance", "color": "LightSkyBlue", "id": "Collins-Thompson", "label": "Collins-Thompson", "primary_project_stage": "Build", "secondary_professional_category": "Civil Engineering", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Legal", "color": "Bisque", "id": "Lambert Group", "label": "Lambert Group", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Finance", "color": "LightSkyBlue", "id": "Rodriguez LLC", "label": "Rodriguez LLC", "primary_project_stage": "Legal \u0026 Finance", "secondary_professional_category": "Electrical Engineering", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Legal", "color": "Bisque", "id": "Combs-Brown", "label": "Combs-Brown", "primary_project_stage": "Commision, Monitor and Maintain", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Groundworks", "color": "IndianRed", "id": "Hoffman Group", "label": "Hoffman Group", "primary_project_stage": "Legal \u0026 Finance", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Groundworks", "color": "IndianRed", "id": "Nicholson-Summers", "label": "Nicholson-Summers", "primary_project_stage": "Legal \u0026 Finance", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Civil Engineering", "color": "CadetBlue", "id": "Johnston and Sons", "label": "Johnston and Sons", "primary_project_stage": "Legal \u0026 Finance", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Griffith, Solis and Payne", "label": "Griffith, Solis and Payne", "primary_project_stage": "Commision, Monitor and Maintain", "secondary_professional_category": "Fundraising", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Electrical Engineering", "color": "GoldenRod", "id": "Fisher, Mendoza and Clark", "label": "Fisher, Mendoza and Clark", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Finance", "color": "LightSkyBlue", "id": "Bates LLC", "label": "Bates LLC", "primary_project_stage": "Project definition", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Finance", "color": "LightSkyBlue", "id": "Jenkins, Pratt and Diaz", "label": "Jenkins, Pratt and Diaz", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "Electrical Engineering", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Fundraising", "color": "LightCoral", "id": "White-Thornton", "label": "White-Thornton", "primary_project_stage": "Legal \u0026 Finance", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Civil Engineering", "color": "CadetBlue", "id": "Garrison LLC", "label": "Garrison LLC", "primary_project_stage": "Commision, Monitor and Maintain", "secondary_professional_category": "Electrical Engineering", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Finance", "color": "LightSkyBlue", "id": "Adams-Leon", "label": "Adams-Leon", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Finance", "color": "LightSkyBlue", "id": "Flowers-Miller", "label": "Flowers-Miller", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "System Design", "color": "BlueViolet", "id": "Hudson-Taylor", "label": "Hudson-Taylor", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Electrical Engineering", "color": "GoldenRod", "id": "Hancock, Parrish and Lopez", "label": "Hancock, Parrish and Lopez", "primary_project_stage": "Commision, Monitor and Maintain", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Fundraising", "color": "LightCoral", "id": "Blair, Cooper and Nelson", "label": "Blair, Cooper and Nelson", "primary_project_stage": "Feasibility study", "secondary_professional_category": "System Design", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Reed-Clements", "label": "Reed-Clements", "primary_project_stage": "Project definition", "secondary_professional_category": "Electrical Engineering", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Electrical Engineering", "color": "GoldenRod", "id": "Flores LLC", "label": "Flores LLC", "primary_project_stage": "Project definition", "secondary_professional_category": "Planning Applications", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Legal", "color": "Bisque", "id": "Pearson Inc", "label": "Pearson Inc", "primary_project_stage": "Project definition", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Fundraising", "color": "LightCoral", "id": "Henderson, Terry and Mcmillan", "label": "Henderson, Terry and Mcmillan", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Mendez-Bright", "label": "Mendez-Bright", "primary_project_stage": "Legal \u0026 Finance", "secondary_professional_category": "Planning Applications", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Legal", "color": "Bisque", "id": "Hall-Perkins", "label": "Hall-Perkins", "primary_project_stage": "Commision, Monitor and Maintain", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Fundraising", "color": "LightCoral", "id": "Carter, Cannon and Little", "label": "Carter, Cannon and Little", "primary_project_stage": "Commision, Monitor and Maintain", "secondary_professional_category": "Groundworks", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Finance", "color": "LightSkyBlue", "id": "Brown Ltd", "label": "Brown Ltd", "primary_project_stage": "Legal \u0026 Finance", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Harrell, Mcguire and Williams", "label": "Harrell, Mcguire and Williams", "primary_project_stage": "Build", "secondary_professional_category": "System Design", "secondary_project_stage": "Heads of Terms", "shape": "dot", "size": 5}, {"Primary Professional Category": "Legal", "color": "Bisque", "id": "Stafford-Landry", "label": "Stafford-Landry", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "Legal", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Fundraising", "color": "LightCoral", "id": "Adams Ltd", "label": "Adams Ltd", "primary_project_stage": "Legal \u0026 Finance", "secondary_professional_category": "Groundworks", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Groundworks", "color": "IndianRed", "id": "Cooper-Armstrong", "label": "Cooper-Armstrong", "primary_project_stage": "Feasibility study", "secondary_professional_category": "Fundraising", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "System Design", "color": "BlueViolet", "id": "Kelly Ltd", "label": "Kelly Ltd", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Groundworks", "color": "IndianRed", "id": "Yu PLC", "label": "Yu PLC", "primary_project_stage": "Project definition", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Finance", "color": "LightSkyBlue", "id": "Davis Group", "label": "Davis Group", "primary_project_stage": "Commision, Monitor and Maintain", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Civil Engineering", "color": "CadetBlue", "id": "Ibarra LLC", "label": "Ibarra LLC", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "Feasibility study", "shape": "dot", "size": 5}, {"Primary Professional Category": "Legal", "color": "Bisque", "id": "Mclaughlin-Smith", "label": "Mclaughlin-Smith", "primary_project_stage": "Project definition", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "System Design", "color": "BlueViolet", "id": "Sawyer, Rodriguez and Mclean", "label": "Sawyer, Rodriguez and Mclean", "primary_project_stage": "Commision, Monitor and Maintain", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Legal", "color": "Bisque", "id": "Turner Group", "label": "Turner Group", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "NA", "secondary_project_stage": "Feasibility study", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Parsons-Gonzalez", "label": "Parsons-Gonzalez", "primary_project_stage": "Commision, Monitor and Maintain", "secondary_professional_category": "Civil Engineering", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Valdez-Steele", "label": "Valdez-Steele", "primary_project_stage": "Feasibility study", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Bradley, Cain and Turner", "label": "Bradley, Cain and Turner", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "Groundworks", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Legal", "color": "Bisque", "id": "Sullivan LLC", "label": "Sullivan LLC", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Wang, Wagner and Everett", "label": "Wang, Wagner and Everett", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Fundraising", "color": "LightCoral", "id": "Eaton-Jones", "label": "Eaton-Jones", "primary_project_stage": "Project definition", "secondary_professional_category": "Groundworks", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Finance", "color": "LightSkyBlue", "id": "Frazier-Thornton", "label": "Frazier-Thornton", "primary_project_stage": "Feasibility study", "secondary_professional_category": "Legal", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Civil Engineering", "color": "CadetBlue", "id": "Peters, Mack and Johnson", "label": "Peters, Mack and Johnson", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Fundraising", "color": "LightCoral", "id": "Ray-Camacho", "label": "Ray-Camacho", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Weaver, Boyd and Williams", "label": "Weaver, Boyd and Williams", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Legal", "color": "Bisque", "id": "Beck-Rodriguez", "label": "Beck-Rodriguez", "primary_project_stage": "Feasibility study", "secondary_professional_category": "Groundworks", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Electrical Engineering", "color": "GoldenRod", "id": "Alvarado, Winters and Thornton", "label": "Alvarado, Winters and Thornton", "primary_project_stage": "Commision, Monitor and Maintain", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "System Design", "color": "BlueViolet", "id": "Carroll Ltd", "label": "Carroll Ltd", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Moreno PLC", "label": "Moreno PLC", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Civil Engineering", "color": "CadetBlue", "id": "Gomez Group", "label": "Gomez Group", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "System Design", "color": "BlueViolet", "id": "Wilkins, Yates and Stewart", "label": "Wilkins, Yates and Stewart", "primary_project_stage": "Legal \u0026 Finance", "secondary_professional_category": "Civil Engineering", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Electrical Engineering", "color": "GoldenRod", "id": "Brooks PLC", "label": "Brooks PLC", "primary_project_stage": "Feasibility study", "secondary_professional_category": "Legal", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Neal, White and Garcia", "label": "Neal, White and Garcia", "primary_project_stage": "Project definition", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Finance", "color": "LightSkyBlue", "id": "Reese, Marquez and Garner", "label": "Reese, Marquez and Garner", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Finance", "color": "LightSkyBlue", "id": "Roberts-Gonzales", "label": "Roberts-Gonzales", "primary_project_stage": "Project definition", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Electrical Engineering", "color": "GoldenRod", "id": "Taylor, Jordan and Young", "label": "Taylor, Jordan and Young", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "System Design", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Finance", "color": "LightSkyBlue", "id": "Shaffer-Potter", "label": "Shaffer-Potter", "primary_project_stage": "Project definition", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Groundworks", "color": "IndianRed", "id": "Wilkinson PLC", "label": "Wilkinson PLC", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Finance", "color": "LightSkyBlue", "id": "Jenkins, Morrow and Garcia", "label": "Jenkins, Morrow and Garcia", "primary_project_stage": "Feasibility study", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Barrett, Brown and Zamora", "label": "Barrett, Brown and Zamora", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "Planning Applications", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Scott-Aguilar", "label": "Scott-Aguilar", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Legal", "color": "Bisque", "id": "Thomas PLC", "label": "Thomas PLC", "primary_project_stage": "Feasibility study", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Johnson LLC", "label": "Johnson LLC", "primary_project_stage": "Legal \u0026 Finance", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Green LLC", "label": "Green LLC", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Electrical Engineering", "color": "GoldenRod", "id": "Huber-Aguirre", "label": "Huber-Aguirre", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Legal", "color": "Bisque", "id": "Smith Inc", "label": "Smith Inc", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Fundraising", "color": "LightCoral", "id": "Lopez Inc", "label": "Lopez Inc", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Legal", "color": "Bisque", "id": "Freeman-Gonzalez", "label": "Freeman-Gonzalez", "primary_project_stage": "Project definition", "secondary_professional_category": "Fundraising", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Groundworks", "color": "IndianRed", "id": "Stewart-Gray", "label": "Stewart-Gray", "primary_project_stage": "Project definition", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Planning Applications", "color": "Brown", "id": "Cruz Group", "label": "Cruz Group", "primary_project_stage": "Legal \u0026 Finance", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Groundworks", "color": "IndianRed", "id": "Leon, Robbins and Nelson", "label": "Leon, Robbins and Nelson", "primary_project_stage": "Heads of Terms", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Finance", "color": "LightSkyBlue", "id": "Wilson, Harrison and Guzman", "label": "Wilson, Harrison and Guzman", "primary_project_stage": "Build", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}, {"Primary Professional Category": "Fundraising", "color": "LightCoral", "id": "Phillips, Hunt and Murray", "label": "Phillips, Hunt and Murray", "primary_project_stage": "Commision, Monitor and Maintain", "secondary_professional_category": "NA", "secondary_project_stage": "NA", "shape": "dot", "size": 5}]);
+                  edges = new vis.DataSet([{"arrows": "to", "color": "black", "from": "Project definition", "to": "Feasibility study", "width": 1}, {"arrows": "to", "color": "black", "from": "Feasibility study", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "color": "black", "from": "Heads of Terms", "to": "Legal \u0026 Finance", "width": 1}, {"arrows": "to", "color": "black", "from": "Legal \u0026 Finance", "to": "Build", "width": 1}, {"arrows": "to", "color": "black", "from": "Build", "to": "Commision, Monitor and Maintain", "width": 1}, {"arrows": "to", "from": "Bryant-Ball", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Warren Group", "to": "Legal \u0026 Finance", "width": 1}, {"arrows": "to", "from": "Barrett-Porter", "to": "Feasibility study", "width": 1}, {"arrows": "to", "from": "Stewart-Young", "to": "Feasibility study", "width": 1}, {"arrows": "to", "from": "Koch Inc", "to": "Feasibility study", "width": 1}, {"arrows": "to", "from": "Mitchell-Munoz", "to": "Build", "width": 1}, {"arrows": "to", "from": "Mitchell-Munoz", "to": "Commision, Monitor and Maintain", "width": 1}, {"arrows": "to", "from": "Ramirez, Murphy and Hayden", "to": "Project definition", "width": 1}, {"arrows": "to", "from": "Smith-Hughes", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Webb-West", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Jones Ltd", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Finley and Sons", "to": "Legal \u0026 Finance", "width": 1}, {"arrows": "to", "from": "Reeves-Williams", "to": "Build", "width": 1}, {"arrows": "to", "from": "Leonard-Flores", "to": "Feasibility study", "width": 1}, {"arrows": "to", "from": "Leonard-Flores", "to": "Build", "width": 1}, {"arrows": "to", "from": "Ochoa Group", "to": "Commision, Monitor and Maintain", "width": 1}, {"arrows": "to", "from": "Martin-Townsend", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Mcintosh Group", "to": "Feasibility study", "width": 1}, {"arrows": "to", "from": "Aguirre, Powell and Escobar", "to": "Project definition", "width": 1}, {"arrows": "to", "from": "Giles and Sons", "to": "Build", "width": 1}, {"arrows": "to", "from": "Leonard Ltd", "to": "Build", "width": 1}, {"arrows": "to", "from": "Leonard Ltd", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Berry and Sons", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Brown, Mcguire and Barton", "to": "Project definition", "width": 1}, {"arrows": "to", "from": "Parker LLC", "to": "Build", "width": 1}, {"arrows": "to", "from": "Barker LLC", "to": "Legal \u0026 Finance", "width": 1}, {"arrows": "to", "from": "Gray, Watson and Smith", "to": "Project definition", "width": 1}, {"arrows": "to", "from": "Brown Inc", "to": "Project definition", "width": 1}, {"arrows": "to", "from": "Collins-Thompson", "to": "Build", "width": 1}, {"arrows": "to", "from": "Lambert Group", "to": "Build", "width": 1}, {"arrows": "to", "from": "Rodriguez LLC", "to": "Legal \u0026 Finance", "width": 1}, {"arrows": "to", "from": "Combs-Brown", "to": "Commision, Monitor and Maintain", "width": 1}, {"arrows": "to", "from": "Hoffman Group", "to": "Legal \u0026 Finance", "width": 1}, {"arrows": "to", "from": "Nicholson-Summers", "to": "Legal \u0026 Finance", "width": 1}, {"arrows": "to", "from": "Johnston and Sons", "to": "Legal \u0026 Finance", "width": 1}, {"arrows": "to", "from": "Griffith, Solis and Payne", "to": "Commision, Monitor and Maintain", "width": 1}, {"arrows": "to", "from": "Fisher, Mendoza and Clark", "to": "Build", "width": 1}, {"arrows": "to", "from": "Bates LLC", "to": "Project definition", "width": 1}, {"arrows": "to", "from": "Jenkins, Pratt and Diaz", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "White-Thornton", "to": "Legal \u0026 Finance", "width": 1}, {"arrows": "to", "from": "Garrison LLC", "to": "Commision, Monitor and Maintain", "width": 1}, {"arrows": "to", "from": "Adams-Leon", "to": "Build", "width": 1}, {"arrows": "to", "from": "Flowers-Miller", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Hudson-Taylor", "to": "Build", "width": 1}, {"arrows": "to", "from": "Hancock, Parrish and Lopez", "to": "Commision, Monitor and Maintain", "width": 1}, {"arrows": "to", "from": "Blair, Cooper and Nelson", "to": "Feasibility study", "width": 1}, {"arrows": "to", "from": "Reed-Clements", "to": "Project definition", "width": 1}, {"arrows": "to", "from": "Flores LLC", "to": "Project definition", "width": 1}, {"arrows": "to", "from": "Pearson Inc", "to": "Project definition", "width": 1}, {"arrows": "to", "from": "Henderson, Terry and Mcmillan", "to": "Build", "width": 1}, {"arrows": "to", "from": "Mendez-Bright", "to": "Legal \u0026 Finance", "width": 1}, {"arrows": "to", "from": "Hall-Perkins", "to": "Commision, Monitor and Maintain", "width": 1}, {"arrows": "to", "from": "Carter, Cannon and Little", "to": "Commision, Monitor and Maintain", "width": 1}, {"arrows": "to", "from": "Brown Ltd", "to": "Legal \u0026 Finance", "width": 1}, {"arrows": "to", "from": "Harrell, Mcguire and Williams", "to": "Build", "width": 1}, {"arrows": "to", "from": "Harrell, Mcguire and Williams", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Stafford-Landry", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Adams Ltd", "to": "Legal \u0026 Finance", "width": 1}, {"arrows": "to", "from": "Cooper-Armstrong", "to": "Feasibility study", "width": 1}, {"arrows": "to", "from": "Kelly Ltd", "to": "Build", "width": 1}, {"arrows": "to", "from": "Yu PLC", "to": "Project definition", "width": 1}, {"arrows": "to", "from": "Davis Group", "to": "Commision, Monitor and Maintain", "width": 1}, {"arrows": "to", "from": "Ibarra LLC", "to": "Build", "width": 1}, {"arrows": "to", "from": "Ibarra LLC", "to": "Feasibility study", "width": 1}, {"arrows": "to", "from": "Mclaughlin-Smith", "to": "Project definition", "width": 1}, {"arrows": "to", "from": "Sawyer, Rodriguez and Mclean", "to": "Commision, Monitor and Maintain", "width": 1}, {"arrows": "to", "from": "Turner Group", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Turner Group", "to": "Feasibility study", "width": 1}, {"arrows": "to", "from": "Parsons-Gonzalez", "to": "Commision, Monitor and Maintain", "width": 1}, {"arrows": "to", "from": "Valdez-Steele", "to": "Feasibility study", "width": 1}, {"arrows": "to", "from": "Bradley, Cain and Turner", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Sullivan LLC", "to": "Build", "width": 1}, {"arrows": "to", "from": "Wang, Wagner and Everett", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Eaton-Jones", "to": "Project definition", "width": 1}, {"arrows": "to", "from": "Frazier-Thornton", "to": "Feasibility study", "width": 1}, {"arrows": "to", "from": "Peters, Mack and Johnson", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Ray-Camacho", "to": "Build", "width": 1}, {"arrows": "to", "from": "Weaver, Boyd and Williams", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Beck-Rodriguez", "to": "Feasibility study", "width": 1}, {"arrows": "to", "from": "Alvarado, Winters and Thornton", "to": "Commision, Monitor and Maintain", "width": 1}, {"arrows": "to", "from": "Carroll Ltd", "to": "Build", "width": 1}, {"arrows": "to", "from": "Moreno PLC", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Gomez Group", "to": "Build", "width": 1}, {"arrows": "to", "from": "Wilkins, Yates and Stewart", "to": "Legal \u0026 Finance", "width": 1}, {"arrows": "to", "from": "Brooks PLC", "to": "Feasibility study", "width": 1}, {"arrows": "to", "from": "Neal, White and Garcia", "to": "Project definition", "width": 1}, {"arrows": "to", "from": "Reese, Marquez and Garner", "to": "Build", "width": 1}, {"arrows": "to", "from": "Roberts-Gonzales", "to": "Project definition", "width": 1}, {"arrows": "to", "from": "Taylor, Jordan and Young", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Shaffer-Potter", "to": "Project definition", "width": 1}, {"arrows": "to", "from": "Wilkinson PLC", "to": "Build", "width": 1}, {"arrows": "to", "from": "Jenkins, Morrow and Garcia", "to": "Feasibility study", "width": 1}, {"arrows": "to", "from": "Barrett, Brown and Zamora", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Scott-Aguilar", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Thomas PLC", "to": "Feasibility study", "width": 1}, {"arrows": "to", "from": "Johnson LLC", "to": "Legal \u0026 Finance", "width": 1}, {"arrows": "to", "from": "Green LLC", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Huber-Aguirre", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Smith Inc", "to": "Build", "width": 1}, {"arrows": "to", "from": "Lopez Inc", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Freeman-Gonzalez", "to": "Project definition", "width": 1}, {"arrows": "to", "from": "Stewart-Gray", "to": "Project definition", "width": 1}, {"arrows": "to", "from": "Cruz Group", "to": "Legal \u0026 Finance", "width": 1}, {"arrows": "to", "from": "Leon, Robbins and Nelson", "to": "Heads of Terms", "width": 1}, {"arrows": "to", "from": "Wilson, Harrison and Guzman", "to": "Build", "width": 1}, {"arrows": "to", "from": "Phillips, Hunt and Murray", "to": "Commision, Monitor and Maintain", "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "repulsion": {
+            "centralGravity": 0.2,
+            "damping": 0.09,
+            "nodeDistance": 100,
+            "springConstant": 0.05,
+            "springLength": 200
+        },
+        "solver": "repulsion",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+                      network.on("stabilizationProgress", function(params) {
+                          document.getElementById('loadingBar').removeAttribute("style");
+                          var maxWidth = 496;
+                          var minWidth = 20;
+                          var widthFactor = params.iterations/params.total;
+                          var width = Math.max(minWidth,maxWidth * widthFactor);
+                          document.getElementById('bar').style.width = width + 'px';
+                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
+                      });
+                      network.once("stabilizationIterationsDone", function() {
+                          document.getElementById('text').innerHTML = '100%';
+                          document.getElementById('bar').style.width = '496px';
+                          document.getElementById('loadingBar').style.opacity = 0;
+                          // really clean the dom element
+                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
+                      });
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

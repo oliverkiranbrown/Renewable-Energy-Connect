@@ -43,8 +43,8 @@
              #mynetwork {
                  width: 800px;
                  height: 800px;
-                 background-color: #ffffff;
-                 border: 1px solid lightgray;
+                 background-color: #222222;
+                 border: 1px solid white;
                  position: left;
                  float: left;
             }
@@ -53,20 +53,13 @@
                 width: 20%;
                 height: 800px;
                 background-color: #ffffff;
-                border: 1px solid lightgray;
+                border: 1px solid white;
                 color: black;
                 position: right;
                 float: right;
                 padding: 1%;
 		    }
-
-
-
-             
-
-             
-
-             
+            
         </style>
     </head>
 
@@ -85,27 +78,6 @@
                     </ul>
 
                     <p>The organisation '<span id="selected_node_text_box"></span>' is selected</p>
-
-                    <input type="text" id="input">
-                    <button onclick="sendData">Send Data</button>
-                    <div id="output"></div>
-                    <script>
-                        function sendData() {
-                            var value = document.getElementById('input').value;
-                            $.ajax({
-                                url: '/process',
-                                type: 'POST',
-                                contentType: 'application/json',
-                                data: JSON.stringify({ 'value': value }),
-                                success: function(response) {
-                                    document.getElementById('output').innerHTML = response.result;
-                                },
-                                error: function(error) {
-                                    console.log(error);
-                                }
-                            });
-                        }
-                    </script>
             </div>
         </div>
 
