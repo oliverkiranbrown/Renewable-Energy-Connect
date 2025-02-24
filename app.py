@@ -1,17 +1,29 @@
-from flask import Flask,render_template, request, jsonify
+# Import packages
+from dash import Dash, html, dash_table
+import pandas as pd
 
-app = Flask(__name__,template_folder="templates")
+# Incorporate data
+df = pd.read_csv('/Users/oliverbrown/Desktop/Oli/Renewable-Energy-Connect/cee-members.csv')
 
-@app.route("/")
-def hello():
-    return render_template('index.html')
+# create fake mock data from other file
+from build_graph import create_graph
 
-@app.route('/process', methods=['POST'])
-def process():
-    data = request.get_json() # retrieve the data sent from JavaScript
-    # process the data using Python code
-    result = data['value'] * 2
-    return jsonify(result=result) # return the result to JavaScript
+# Initialize the app
+app = Dash()
 
+# create the graph
+graph_to_show = create_graph()
+
+# App layout
+app.layout = [
+    html.Div(children='My First App with Data'),
+    html.Div(children=html.Iframe(
+        srcDoc=graph_to_show.generate_html(),
+        width='800px',
+        height='600px'
+    ))
+]
+
+# Run the app
 if __name__ == '__main__':
     app.run(debug=True)
