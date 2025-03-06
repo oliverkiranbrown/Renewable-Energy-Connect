@@ -65,6 +65,7 @@ project_stages_nodes = []
 for idx, row in df_stages.iterrows():
     project_stages_nodes.append((row['stages'], {"color": row.node_colour,
                                                  "size": row.node_size,
+                                                 #"font": {'size': 100},
                                                  "x": row.x,
                                                  "y": row.y}
                                 ))
@@ -79,3 +80,6 @@ for idx, row in df.iterrows():
                                                "color": row.node_colour,
                                                "size": row.node_size}
                                                ))
+    
+
+df.to_csv('toy_data.csv', index=False)

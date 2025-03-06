@@ -16,8 +16,8 @@ def create_graph():
     for i in range(len(project_stages)-1):
         G.add_edge(project_stages[i], 
                 project_stages[i+1], 
-                color = 'black',
-                width = 100)
+                color = 'black')#,
+                #width = 100)
 
     # add the different actors to the graph
     G.add_nodes_from(actor_nodes)
@@ -34,9 +34,19 @@ def create_graph():
                                 cdn_resources='in_line',
                                 select_menu=True,
                                 filter_menu=True)
-                                #heading='Renewable Energy Connect - Initial Scoping')
 
-    graph_to_show.repulsion()
     graph_to_show.from_nx(G)
+
+    # make the key nodes bigger
+    for n in graph_to_show.nodes:
+        if n['color'] == 'DarkSalmon':
+            n['font'] = {'size': 50}
+
+    for e in graph_to_show.edges:
+        # hacky fix to avoid accessing a dictionary item that doesn't exist
+        if len(e) > 4:
+            if (e['color'] == 'black'):
+                e['width'] = 10
+                e['arrowStrikethrough'] = False                
 
     return graph_to_show

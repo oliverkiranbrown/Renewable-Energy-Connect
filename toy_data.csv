@@ -1,0 +1,101 @@
+name,primary_professional_category,secondary_professional_category,primary_project_stage,secondary_project_stage,node_size,node_colour
+"Chase, Hall and Wagner",Planning Applications,NA,Build,NA,5,Brown
+"Weaver, Patterson and Garcia",Planning Applications,NA,Project definition,NA,5,Brown
+Pruitt-Brown,Legal,NA,Project definition,NA,5,Bisque
+Williams and Sons,Finance,NA,"Commision, Monitor and Maintain",NA,5,LightSkyBlue
+"Reynolds, Wright and Lee",Finance,NA,Feasibility study,NA,5,LightSkyBlue
+Kaiser Group,Legal,NA,Legal & Finance,NA,5,Bisque
+Edwards-Williams,Civil Engineering,NA,Build,NA,5,CadetBlue
+Chang-Berger,Planning Applications,NA,Feasibility study,NA,5,Brown
+Morgan-Jackson,Finance,NA,Feasibility study,NA,5,LightSkyBlue
+Pacheco-Guerra,Groundworks,NA,Build,NA,5,IndianRed
+Torres Ltd,Fundraising,Civil Engineering,"Commision, Monitor and Maintain",NA,5,LightCoral
+"Kennedy, Miller and Serrano",Electrical Engineering,NA,Feasibility study,Project definition,5,GoldenRod
+Gibson-Stewart,Planning Applications,NA,Legal & Finance,NA,5,Brown
+Castro PLC,Legal,NA,Project definition,NA,5,Bisque
+Stevens Inc,Groundworks,NA,"Commision, Monitor and Maintain",NA,5,IndianRed
+Smith-Williams,Electrical Engineering,Groundworks,Build,NA,5,GoldenRod
+Crane LLC,Electrical Engineering,NA,Legal & Finance,NA,5,GoldenRod
+Ibarra PLC,System Design,NA,Feasibility study,NA,5,BlueViolet
+"Saunders, Beltran and Vega",Groundworks,NA,Heads of Terms,NA,5,IndianRed
+"Coleman, Kidd and Hernandez",Fundraising,Civil Engineering,Heads of Terms,NA,5,LightCoral
+"Brown, Brewer and Parker",Planning Applications,NA,"Commision, Monitor and Maintain",NA,5,Brown
+Stephenson and Sons,System Design,NA,Build,NA,5,BlueViolet
+"Larson, Chen and Oneill",Fundraising,NA,"Commision, Monitor and Maintain",NA,5,LightCoral
+"Phillips, James and Moran",System Design,NA,Project definition,Feasibility study,5,BlueViolet
+"Page, Rodriguez and Willis",Finance,NA,Heads of Terms,NA,5,LightSkyBlue
+"Jones, Johnson and Wong",Electrical Engineering,NA,Build,NA,5,GoldenRod
+Martin-Simmons,Planning Applications,NA,Build,NA,5,Brown
+Campbell Group,Finance,NA,Heads of Terms,NA,5,LightSkyBlue
+Parker Ltd,Fundraising,Electrical Engineering,Project definition,NA,5,LightCoral
+Edwards-Smith,Finance,NA,Feasibility study,NA,5,LightSkyBlue
+Hernandez LLC,Groundworks,NA,Heads of Terms,NA,5,IndianRed
+Young Ltd,Legal,NA,Heads of Terms,NA,5,Bisque
+Wright PLC,Planning Applications,NA,Feasibility study,NA,5,Brown
+Reed Ltd,Groundworks,NA,Legal & Finance,NA,5,IndianRed
+Tran-Mitchell,Legal,NA,Legal & Finance,NA,5,Bisque
+"Riddle, Little and Davis",Finance,NA,"Commision, Monitor and Maintain",NA,5,LightSkyBlue
+Baker PLC,Finance,NA,"Commision, Monitor and Maintain",NA,5,LightSkyBlue
+"Patel, Jones and Miller",Planning Applications,NA,Heads of Terms,NA,5,Brown
+Obrien LLC,Finance,NA,Heads of Terms,NA,5,LightSkyBlue
+Bonilla Ltd,Finance,NA,"Commision, Monitor and Maintain",NA,5,LightSkyBlue
+Parsons-Nicholson,Legal,NA,Project definition,NA,5,Bisque
+"Harris, Adams and Elliott",Groundworks,Civil Engineering,Legal & Finance,NA,5,IndianRed
+"Moyer, Jimenez and Flynn",Fundraising,NA,Feasibility study,Feasibility study,5,LightCoral
+Castillo LLC,System Design,Legal,"Commision, Monitor and Maintain",NA,5,BlueViolet
+Hanson Group,Legal,NA,"Commision, Monitor and Maintain",NA,5,Bisque
+White-Hood,Legal,NA,Feasibility study,NA,5,Bisque
+Ramos-Fuller,Finance,NA,Legal & Finance,NA,5,LightSkyBlue
+"Lang, Larsen and Morgan",Groundworks,Finance,Legal & Finance,NA,5,IndianRed
+Jenkins-Wright,Planning Applications,Civil Engineering,Build,NA,5,Brown
+Montoya Inc,Planning Applications,NA,Project definition,NA,5,Brown
+Miller and Sons,Groundworks,System Design,Feasibility study,NA,5,IndianRed
+"Cook, Reed and Young",Legal,NA,Heads of Terms,NA,5,Bisque
+Rodriguez-Morris,Electrical Engineering,NA,Legal & Finance,NA,5,GoldenRod
+Mason-Smith,Electrical Engineering,NA,"Commision, Monitor and Maintain",NA,5,GoldenRod
+"Booker, Ramos and Bennett",Groundworks,NA,Legal & Finance,NA,5,IndianRed
+Galvan Inc,Finance,NA,Feasibility study,NA,5,LightSkyBlue
+Park Group,Finance,NA,Build,NA,5,LightSkyBlue
+Liu Ltd,Civil Engineering,NA,Project definition,NA,5,CadetBlue
+"Cardenas, Brown and Moon",Civil Engineering,NA,Build,NA,5,CadetBlue
+"Dodson, Palmer and Wilcox",Electrical Engineering,NA,"Commision, Monitor and Maintain",NA,5,GoldenRod
+Lara-Ward,Civil Engineering,NA,Build,NA,5,CadetBlue
+Rodriguez PLC,Finance,NA,Heads of Terms,NA,5,LightSkyBlue
+"Rosario, Wilson and Smith",Electrical Engineering,NA,"Commision, Monitor and Maintain",NA,5,GoldenRod
+"West, Bennett and Johns",Civil Engineering,NA,Build,NA,5,CadetBlue
+"Gutierrez, Li and Buck",Finance,NA,Build,NA,5,LightSkyBlue
+Shaw LLC,Civil Engineering,NA,Heads of Terms,NA,5,CadetBlue
+Evans-Foley,System Design,NA,"Commision, Monitor and Maintain",NA,5,BlueViolet
+Newton and Sons,Fundraising,NA,Project definition,NA,5,LightCoral
+White and Sons,Finance,Civil Engineering,Heads of Terms,NA,5,LightSkyBlue
+Aguilar-Martinez,Finance,Finance,Project definition,NA,5,LightSkyBlue
+Cowan-Henry,Fundraising,Civil Engineering,Heads of Terms,NA,5,LightCoral
+Scott-Hernandez,Groundworks,Finance,Legal & Finance,NA,5,IndianRed
+Anderson Inc,Finance,NA,Project definition,NA,5,LightSkyBlue
+"Booth, Bryan and Smith",Planning Applications,NA,Heads of Terms,NA,5,Brown
+Smith Group,Planning Applications,NA,Legal & Finance,NA,5,Brown
+"Taylor, Mcintyre and Phillips",System Design,Legal,"Commision, Monitor and Maintain",NA,5,BlueViolet
+"Simmons, Schneider and Roberson",Finance,NA,"Commision, Monitor and Maintain",NA,5,LightSkyBlue
+Aguilar-Byrd,Planning Applications,NA,Build,NA,5,Brown
+Malone Inc,System Design,NA,"Commision, Monitor and Maintain",NA,5,BlueViolet
+"Allen, Rich and Cochran",Finance,NA,Feasibility study,NA,5,LightSkyBlue
+"Nolan, Green and Rose",Groundworks,NA,Feasibility study,NA,5,IndianRed
+Johnson-Nunez,Planning Applications,NA,Project definition,NA,5,Brown
+"Moon, Wilson and Chavez",Groundworks,NA,Legal & Finance,NA,5,IndianRed
+Cunningham-Jackson,System Design,Fundraising,Project definition,NA,5,BlueViolet
+Heath LLC,Groundworks,NA,Feasibility study,NA,5,IndianRed
+"Blankenship, Howell and King",System Design,NA,Legal & Finance,NA,5,BlueViolet
+Norris Inc,Electrical Engineering,Finance,"Commision, Monitor and Maintain",NA,5,GoldenRod
+Woods and Sons,Legal,Civil Engineering,"Commision, Monitor and Maintain",NA,5,Bisque
+Tate-Smith,Civil Engineering,NA,Legal & Finance,NA,5,CadetBlue
+Huffman-Garcia,Civil Engineering,NA,Feasibility study,NA,5,CadetBlue
+Marsh-Moore,Fundraising,NA,Feasibility study,Project definition,5,LightCoral
+Pope Ltd,Electrical Engineering,Planning Applications,Heads of Terms,NA,5,GoldenRod
+"Jones, King and Martinez",Fundraising,NA,Legal & Finance,NA,5,LightCoral
+"Allen, Macias and Baker",System Design,NA,Legal & Finance,NA,5,BlueViolet
+Lin-Becker,Electrical Engineering,NA,"Commision, Monitor and Maintain",NA,5,GoldenRod
+Fisher-Marshall,Finance,NA,Heads of Terms,NA,5,LightSkyBlue
+"Wagner, Thompson and Ross",Fundraising,NA,Heads of Terms,NA,5,LightCoral
+Abbott-Lopez,Groundworks,NA,Build,NA,5,IndianRed
+"Lynch, Casey and Gutierrez",Groundworks,NA,Build,NA,5,IndianRed
+Cohen Inc,System Design,NA,Feasibility study,NA,5,BlueViolet

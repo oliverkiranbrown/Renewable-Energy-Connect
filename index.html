@@ -399,7 +399,18 @@
                 </div>
               </div>
             
-            <div id="mynetwork" class="card-body"></div>
+            <div class="container">
+                <div class="row">
+                    <div id="mynetwork" class="card-body"></div>
+                </div>
+                <div class="row">
+                    <h2><i>Organisation: </ii></h2>
+                        <p>The organisation '<span id="selected_node_text_box"></span>' is selected</p>
+                </div>
+            </div>
+            
+
+            
         </div>
 
         
@@ -634,7 +645,13 @@
 
                   network = new vis.Network(container, data, options);
 
-                  
+                  network.on('click', function(properties) {
+                    if (properties.nodes.length > 0) {
+                        var selected_node = properties.nodes
+                        document.getElementById("selected_node_text_box").innerHTML = selected_node
+                    }
+                  })
+                
 
                   
                     network.on("selectNode", neighbourhoodHighlight);
